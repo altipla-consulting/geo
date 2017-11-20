@@ -88,3 +88,8 @@ func (p Point) Value() (driver.Value, error) {
 
 	return w.Bytes(), nil
 }
+
+// Valid returns whether a GeoPoint is within [-90, 90] latitude and [-180, 180] longitude.
+func (p Point) Valid() bool {
+	return -90 <= p.Lat && p.Lat <= 90 && -180 <= p.Lng && p.Lng <= 180
+}
