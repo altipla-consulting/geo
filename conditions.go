@@ -36,7 +36,7 @@ func (cond *NearCondition) SQL() string {
 			)
 		) < ?
 	`
-	return fmt.Sprintf(s, cond.point.Lng, cond.point.Lng, cond.point.Lat)
+	return fmt.Sprintf(s, cond.point.Lat, cond.point.Lat, cond.point.Lng)
 }
 
 // Values returns the SQL placeholders to apply the filter
