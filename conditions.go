@@ -6,13 +6,14 @@ import (
 
 // NearCondition stores the point and distance to filter around
 type NearCondition struct {
-	point Point
-	value float64
+	column string
+	point  Point
+	value  float64
 }
 
 // Near filters by distance around a geographic point
-func Near(point Point, value float64) *NearCondition {
-	return &NearCondition{point, value}
+func Near(column string, point Point, value float64) *NearCondition {
+	return &NearCondition{column, point, value}
 }
 
 // SQL returns the built SQL to apply the filter.
@@ -22,21 +23,21 @@ func (cond *NearCondition) SQL() string {
 			SQRT(
 				POWER(
 					SIN(
-						RADIANS(%v - ABS(Y(position)))/2
+						RADIANS(%f - ABS(Y(%s)))/2
 					),
 					2
 				)
-				+ COS(RADIANS(%v)) * COS(RADIANS(ABS(Y(position))))
+				+ COS(RADIANS(%f)) * COS(RADIANS(ABS(Y(%s))))
 				* POWER(
 					SIN(
-						RADIANS(%v - X(position))/2
+						RADIANS(%f - X(%s))/2
 					),
 					2
 				)
 			)
 		) < ?
 	`
-	return fmt.Sprintf(s, cond.point.Lat, cond.point.Lat, cond.point.Lng)
+	return fmt.Sprintf(s, cond.point.Lat, cond.column, cond.point.Lat, cond.column, cond.point.Lng, cond.column)
 }
 
 // Values returns the SQL placeholders to apply the filter
