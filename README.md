@@ -1,6 +1,8 @@
 
 # geo
 
+> **DEPRECATED:** Use https://github.com/altipla-consulting/libs instead.
+
 [![GoDoc](https://godoc.org/github.com/altipla-consulting/geo?status.svg)](https://godoc.org/github.com/altipla-consulting/geo)
 
 > Customized types and functions for our geo needs.
